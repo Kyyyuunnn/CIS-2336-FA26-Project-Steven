@@ -9,26 +9,45 @@ async function populateRoomSelect() {
 
   // TODO:
   // 1. Call getRooms() from api.js
+  const rooms = await getRooms();
   // 2. For each room, create an <option value="ROOM_ID">ROOM_NAME</option>
+  for (const room of rooms) {
+     const option = document.createElement("option");
+     option.value = room.id;
+     option.textContent = room.name;
   // 3. Append the options to `select`
+     select.appendChild(option);
+  }
 }
+
+
 
 function handleBookingSubmit(event) {
   event.preventDefault();
 
-  const statusEl = document.getElementById("form-status");
+  // 1. Read the form values
+  const roomId = document.getElementById("room-select").value;
+  const clubName = document.getElementById("club-name").value;
+  const date = document.getElementById("date").value;
+  const startTime = document.getElementById("start-time").value;
+  const endTime = document.getElementById("end-time").value;
+  const purpose = document.getElementById("purpose").value;
 
-  // TODO:
-  // 1. Read the form values (roomId, clubName, date, startTime, endTime, purpose)
-  //    Hint: use document.getElementById(...).value for each field
-  // 2. Build a bookingData object matching the shape described in api.js
-  // 3. Call createBooking(bookingData) from api.js
-  // 4. On success, show a message in statusEl (add class "success")
-  //    and consider resetting the form with event.target.reset()
-  // 5. On failure, show an error message in statusEl (add class "error")
+  // 2. Build bookingData object
+  const bookingData = {
+    roomId: roomId,
+    clubName: clubName,
+    date: date,
+    startTime: startTime,
+    endTime: endTime,
+    purpose: purpose
+  };
 
-  statusEl.textContent = "TODO: implement handleBookingSubmit()";
+  // 3. Log booking object to console
+  console.log(bookingData);
 }
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   populateRoomSelect();
